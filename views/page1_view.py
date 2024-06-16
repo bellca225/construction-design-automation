@@ -14,11 +14,10 @@ class Page1View(ttk.Frame):
         self.values_label = ttk.Label(self, text="선택 없음")
         self.values_label.place(relx=0.05, rely=0.1)
         
-        self.button1 = ttk.Button(self, text="아니오", command=lambda: controller.show_frame("HomeView"))
-        # button1 = ttk.Button(self, text="선택 초기화", command=self.reset_selection)
-        self.button1.place(relx=0.05, rely=0.3)
-        self.button2 = ttk.Button(self, text="네", command=lambda: controller.show_frame("Page2View"))
-        self.button2.place(relx=0.25, rely=0.3)
+        self.button2 = ttk.Button(self, text="예", command=lambda: controller.show_frame("Page2View"))
+        self.button2.place(relx=0.05, rely=0.3)
+        self.button1 = ttk.Button(self, text="아니오 (이전으로)", command=lambda: controller.show_frame("HomeView"))
+        self.button1.place(relx=0.25, rely=0.3)
 
         
         # self.button.pack()
