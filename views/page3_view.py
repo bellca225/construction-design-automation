@@ -49,6 +49,8 @@ class Page3View(ttk.Frame):
 
         self.labels.clear()
         self.entries.clear()
+        
+        total_cost = 0  # 노무임 합계를 저장할 변수
 
         # 동적으로 라벨 3개와 인풋 1개를 배열의 각 원소마다 생성
         for idx, text in enumerate(selected_texts):
@@ -73,9 +75,18 @@ class Page3View(ttk.Frame):
             label3 = ttk.Label(self, text = 금액)
             label3.place(relx=0.80, rely=0.15 + idx * 0.05)
             self.labels.append(label3)
+            
+            # 노무임 합계 계산
+            total_cost += 금액
+            
+            # 노무임 합계 라벨 생성 및 표시
+            label_total_cost = ttk.Label(self, text=f"노무임 합계: {total_cost}")
+            label_total_cost.place(relx=0.05, rely=0.15 + len(selected_texts) * 0.05)
+            self.labels.append(label_total_cost)
 
         for lb in selected_texts:
             print(lb)
+    
         
         
         
