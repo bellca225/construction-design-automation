@@ -8,9 +8,10 @@ class Page5View(ttk.Frame):
 
         lb1 = ttk.Label(self, text="코멘트 남기시겠습니까?")
         lb1.place(relx=0.05, rely=0.05)
-        lb1 = ttk.Label(self, text="공사금액 표시")
-        lb1.place(relx=0.05, rely=0.1)
-
+        
+        entry = ttk.Entry(self)
+        entry.place(relx=0.05, rely=0.1, width=200, height=80)
+        
         self.button_yes = ttk.Button(self, text="예", command=self.on_yes)
         self.button_yes.place(relx=0.05, rely=0.3)
 

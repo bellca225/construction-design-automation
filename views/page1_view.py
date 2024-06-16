@@ -22,6 +22,6 @@ class Page1View(ttk.Frame):
         
         # self.button.pack()
 
-    def update_data(self, selected_values):
+    def update_data(self, selected_texts):
         # 선택된 값을 업데이트하고 라벨에 표시
-        self.values_label.config(text=f"{selected_values}")
+        self.values_label.config(text=f"{', '.join(selected_texts)}")

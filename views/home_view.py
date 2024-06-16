@@ -3,11 +3,11 @@ from tkinter import ttk
 from tkinter import messagebox
 
 class HomeView(ttk.Frame):
+    # 초기화
+    
     def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
-        # 초기화
-        self.controller.set_selected_texts([])
         
         relyNum = 0.1
         chkbtnNm = controller.chkbtnNm
@@ -30,7 +30,6 @@ class HomeView(ttk.Frame):
     def reset_selection(self):
         for var in self.var_list:
             var.set(0)  # 각 체크버튼 변수를 0으로 설정하여 체크 해제
-
     def on_complete(self):
         selected_indices = [i for i, var in enumerate(self.var_list) if var.get() == 1]
         if not selected_indices:
