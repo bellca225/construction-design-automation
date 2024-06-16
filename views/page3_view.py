@@ -17,13 +17,8 @@ class Page3View(ttk.Frame):
             lb.place(relx = relx, rely = 0.1)
             relx += 0.25
             
-        # self.selected_texts_label = ttk.Label(self, text="선택된 텍스트: ")
-        # self.selected_texts_label.pack()
-        # self.decision_label = ttk.Label(self, text="공사 30일 이상  여부: ")
-        # self.decision_label.pack()
-        
         button_yes = ttk.Button(self, text="확인", command=self.on_confirm)
-        button_yes.place(relx=0.05, rely=0.5)
+        button_yes.place(relx=0.05, rely=0.45)
 
         self.button_no = ttk.Button(self, text="다음", command=self.on_next)
         self.button_no.place(relx=0.05, rely=0.8)
@@ -35,14 +30,39 @@ class Page3View(ttk.Frame):
         print('엑셀 다운로드 함수 실행!')
         print('공사 30일 이상 여부 : ' + self.ynConstructDate)
         print('확인, 밑의 영역 채우기')
+        
+        lbs1 = ['기타경비', '일반관리비', '산재보험료', '고용보험료', '이윤']
+        lbs2 = ['건강보험', '노인장기요양', '연금보험']
+        
+        if self.ynConstructDate == '예':
+            combined_labels = lbs1 + lbs2
+        else:
+            combined_labels = lbs1
+        
+        for idx in range(len(combined_labels)):
+            label_text = combined_labels[idx]
+            label = ttk.Label(self, text=label_text)
+            label.place(relx = 0.05, rely = 0.5 + idx * 0.03)
+            self.labels.append(label)
+            # 예시 값, 실제 숫자 값에 맞게 수정해야 함
+            # lbs1 혹은 lbs1 + lbs2의 순서대로 가격 입력 후 idx로 접근
+            number_value = 50  
+            label_number = ttk.Label(self, text=number_value)
+            label_number.place(relx=0.55, rely=0.5 + idx * 0.03)
+            self.labels.append(label_number)
+                
+        # 숫자 값 라벨의 합계 구하기
+        total_number_value = sum([int(label.cget("text")) for idx, label in enumerate(self.labels) if idx % 2 != 0])
+        label_total_number = ttk.Label(self, text=f"숫자 값 라벨 합계: {total_number_value}")
+        label_total_number.place(relx=0.05, rely=0.5 + len(combined_labels) * 0.03)
+        self.labels.append(label_total_number)
+
 
     def on_next(self):
         self.controller.show_frame("Page4View")
 
     def update_data(self, selected_texts, decision):
         self.ynConstructDate = decision
-        # self.selected_texts_label.config(text=f"선택된 텍스트: {', '.join(selected_texts)}")
-        # self.decision_label.config(text=f"공사 30일 이상 여부: {decision}")
         
         # 기존에 생성된 위젯이 있다면 모두 제거
         for label in self.labels:
@@ -84,21 +104,10 @@ class Page3View(ttk.Frame):
             
             # 노무임 합계 라벨 생성 및 표시
             label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
-            label_total_cost.place(relx=0.05, rely=0.15 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.1 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
-            #  간접 노무비 *0.13
+            #  간접 노무비 * 0.13
             label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
-            label_total_cost.place(relx=0.05, rely=0.18 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.13 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
-
-        for lb in selected_texts:
-            print(lb)
-    
-        
-        
-        
-        
-        
-
-        

@@ -27,7 +27,6 @@ class MainApp(tk.Tk):
         self.container.grid_rowconfigure(0, weight=1)
         self.container.grid_columnconfigure(0, weight=1)
         
-
         self.chkbtnNm = ['꼬임 케이블 포설', '커넥터 및 Jack 접속', '제어 케이블', '통신용 구내 전력케이블', 'FR 케이블']
 
         self.frames = {}
