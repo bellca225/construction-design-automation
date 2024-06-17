@@ -6,8 +6,10 @@ class Page4View(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
 
-        lb1 = ttk.Label(self, text="공사금액이 맞습니까?")
+
+        lb1 = ttk.Label(self, text="6. 공사금액이 맞습니까?")
         lb1.place(relx=0.05, rely=0.05)
+        
         lb1 = ttk.Label(self, text="공사금액 표시")
         lb1.place(relx=0.05, rely=0.1)
 
@@ -16,7 +18,7 @@ class Page4View(ttk.Frame):
         self.button_yes.place(relx=0.05, rely=0.3)
 
         self.button_no = ttk.Button(self, text="아니오", command=self.on_no)
-        self.button_no.place(relx=0.25, rely=0.3)
+        self.button_no.place(relx=0.24, rely=0.3)
 
     def on_yes(self):
         self.controller.show_frame("Page5View")
