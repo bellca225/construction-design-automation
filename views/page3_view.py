@@ -220,7 +220,7 @@ class Page3View(ttk.Frame):
             self.labels.append(label2)
 
             # 금액 = 수량 * 단가 넣어줘야 함! 
-            cost_value = 200
+            cost_value = 단가
             label3 = ttk.Label(self, text = cost_value)
             label3.place(relx=0.80, rely=0.15 + idx * 0.035)
             self.labels.append(label3)
