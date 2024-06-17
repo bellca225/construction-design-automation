@@ -50,7 +50,8 @@ class Page3View(ttk.Frame):
         'S/W시험사': 433747, 
         '통신관련기사': 305806, 
         '통신관련산업기사': 294019, 
-        '통신관련기능사': 242587}
+        '통신관련기능사': 242587
+        }
     
     var_selected_texts = []
     
@@ -82,7 +83,6 @@ class Page3View(ttk.Frame):
         self.entries = []
 
     def on_confirm(self):
-        print('엑셀 다운로드 함수 실행!')
         print('공사 30일 이상 여부 : ' + self.ynConstructDate)
         print('확인, 밑의 영역 채우기')
         
@@ -118,7 +118,64 @@ class Page3View(ttk.Frame):
         self.labels.append(label_total_cost_value)
     
     def on_cnt_confirm(self):
-        print(1)
+        품셈_list = [self.품셈[key] for key in self.var_selected_texts]
+        노무임1_list = [self.노무임[key] for key in self.var_selected_texts]
+        노무임2_list = [self.raw_data[key] for key in 노무임1_list]
+
+        # 기존에 생성된 위젯이 있다면 모두 제거
+        for label in self.labels:
+            label.destroy()
+        # for entry in self.entries:
+        #     entry.destroy()
+
+        self.labels.clear()
+        # self.entries.clear()
+        
+        total_cost = 0  # 노무임 합계를 저장할 변수
+        user_count = []
+        # 동적으로 라벨 3개와 인풋 1개를 배열의 각 원소마다 생성
+        for entry in self.entries:
+                print(entry.get())
+                user_count.append(entry.get())
+                
+        for idx, text in enumerate(self.var_selected_texts):
+            # 라벨 이름
+            label1 = ttk.Label(self, text=f"{text}")
+            label1.place(relx=0.05, rely=0.15 + idx * 0.03)
+            self.labels.append(label1)
+
+            # 수량
+            # entry = ttk.Entry(self)
+            # entry.place(relx=0.3, rely=0.15 + idx * 0.035, width=50, height=20)
+            # self.entries.append(entry)
+            # entry.insert(0, "1")
+            
+        
+            단가 = 품셈_list[idx] * 노무임2_list[idx]
+            label2 = ttk.Label(self, text = 단가)
+            label2.place(relx=0.55, rely=0.15 + idx * 0.035)
+            self.labels.append(label2)
+
+            # 금액 = 수량 * 단가 넣어줘야 함! 
+            cost_value = 단가 * int(user_count[idx])
+            label3 = ttk.Label(self, text = cost_value)
+            label3.place(relx=0.80, rely=0.15 + idx * 0.035)
+            self.labels.append(label3)
+            
+            # 노무임 합계 계산
+            total_cost += cost_value
+            
+            # 노무임 합계 라벨 생성 및 표시
+            label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
+            label_total_cost.place(relx=0.05, rely=0.125 + len(self.var_selected_texts) * 0.05)
+            self.labels.append(label_total_cost)
+            
+            #  간접 노무비 * 0.13
+            label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
+            label_total_cost.place(relx=0.05, rely=0.155 + len(self.var_selected_texts) * 0.05)
+            self.labels.append(label_total_cost)
+            
+        print(self.var_selected_texts)
         
 
     def on_next(self):
@@ -173,10 +230,10 @@ class Page3View(ttk.Frame):
             
             # 노무임 합계 라벨 생성 및 표시
             label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
-            label_total_cost.place(relx=0.05, rely=0.13 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.125 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
             #  간접 노무비 * 0.13
             label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
-            label_total_cost.place(relx=0.05, rely=0.16 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.155 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
