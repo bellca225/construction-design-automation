@@ -11,7 +11,7 @@ class HomeView(ttk.Frame):
         
         relyNum = 0.1
         chkbtnNm = controller.chkbtnNm
-        lb1 = ttk.Label(self, text="작업을 선택하세요.")
+        lb1 = ttk.Label(self, text="1. 작업을 선택하세요.")
         lb1.place(relx=0.05, rely=0.05)
         self.var_list = []  # 체크버튼 변수를 저장할 리스트
 

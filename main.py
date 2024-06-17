@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
+import tkinter.font
 from views.home_view import HomeView
 from views.page1_view import Page1View
 from views.page2_view import Page2View
@@ -7,10 +8,11 @@ from views.page3_view import Page3View
 from views.page4_view import Page4View
 from views.page5_view import Page5View
 from views.page6_view import Page6View
-
-class MainApp(tk.Tk):
+from ttkthemes import ThemedTk
+class MainApp(ThemedTk):
     def __init__(self, *args, **kwargs):
-        tk.Tk.__init__(self, *args, **kwargs)
+        ThemedTk.__init__(self, *args, **kwargs)
+        self.set_theme("arc") 
         self.geometry('600x600+100+100')
         self.title('자동 통신공사 설계 프로그램')
 
@@ -18,10 +20,14 @@ class MainApp(tk.Tk):
         self.decision1 = None  # 공사 일수 결정을 저장할 변수
         self.decision2 = None  # 코멘트 작성 여부를 저장할 변수 (시트 하나 추가)
         # 스타일 정의
+        font1=tkinter.font.Font(family="맑은 고딕", size=10)
+        fontBtn=tkinter.font.Font(family="맑은 고딕", size=10, weight = 'bold')
         style = ttk.Style()
-        # style.configure('TFrame', background='#1d2a4c')
-        # style.configure('TLabel', background='#1d2a4c', foreground='#ffffff', font=('맑은고딕', 12))
-        # style.configure('TButton', background='#070e1d', foreground='#ffffff', font=('맑은고딕', 10))
+        style.configure('TFrame', background='#f5f6f7')
+        style.configure('TLabel', background='#f5f6f7',foreground='#1d2a4c', font=font1)
+        style.configure('TButton', background='#f5f6f7', foreground='#0673bd', font=fontBtn)
+        style.configure('TCheckbutton', foreground='#1d2a4c', font=font1)
+        
         self.container = ttk.Frame(self)
         self.container.pack(side="top", fill="both", expand=True)
         self.container.grid_rowconfigure(0, weight=1)

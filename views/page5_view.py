@@ -6,7 +6,7 @@ class Page5View(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
 
-        lb1 = ttk.Label(self, text="엑셀 내 코멘트를 남겨주세요.")
+        lb1 = ttk.Label(self, text="7. 엑셀 내 코멘트를 남겨주세요.")
         lb1.place(relx=0.05, rely=0.05)
         
         entry = ttk.Entry(self)

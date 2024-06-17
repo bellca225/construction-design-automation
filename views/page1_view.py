@@ -8,7 +8,7 @@ class Page1View(ttk.Frame):
         self.controller = controller
 
         relyNum = 0.1
-        lb1 = ttk.Label(self, text="해당 작업사항이 맞습니까?")
+        lb1 = ttk.Label(self, text="2. 해당 작업사항이 맞습니까?")
         lb1.place(relx=0.05, rely=0.05)
 
         self.values_label = ttk.Label(self, text="선택 없음")

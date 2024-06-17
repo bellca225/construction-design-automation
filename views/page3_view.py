@@ -7,7 +7,7 @@ class Page3View(ttk.Frame):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
 
-        lb1 = ttk.Label(self, text="노무임")
+        lb1 = ttk.Label(self, text="4. 노무임 확인")
         lb1.place(relx=0.05, rely=0.05)
         
         relx = 0.05
@@ -39,7 +39,7 @@ class Page3View(ttk.Frame):
         else:
             combined_labels = lbs1
         
-        title = ttk.Label(self, text="경비")
+        title = ttk.Label(self, text="5. 경비 확인")
         title.place(relx=0.05, rely=0.5)
         self.labels.append(title)
         total_cost = 0
