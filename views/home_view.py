@@ -25,7 +25,7 @@ class HomeView(ttk.Frame):
         button2 = ttk.Button(self, text="선택 완료", command=self.on_complete)
         button2.place(relx=0.05, rely=0.3)
         button1 = ttk.Button(self, text="선택 초기화", command=self.reset_selection)
-        button1.place(relx=0.25, rely=0.3)
+        button1.place(relx=0.24, rely=0.3)
 
     def reset_selection(self):
         for var in self.var_list:
@@ -37,4 +37,5 @@ class HomeView(ttk.Frame):
         else:
             selected_texts = [self.controller.chkbtnNm[i] for i in selected_indices]
             self.controller.set_selected_texts(selected_texts)
+            self.reset_selection()
             self.controller.show_frame("Page1View", selected_texts)

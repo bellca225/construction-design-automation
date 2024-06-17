@@ -16,12 +16,15 @@ class Page3View(ttk.Frame):
             lb = ttk.Label(self, text = lb)
             lb.place(relx = relx, rely = 0.1)
             relx += 0.25
-            
-        button_yes = ttk.Button(self, text="확인", command=self.on_confirm)
-        button_yes.place(relx=0.05, rely=0.42)
+
+        button_yes = ttk.Button(self, text="수량 적용", command=self.on_cnt_confirm)
+        button_yes.place(relx=0.05, rely=0.45)
+    
+        button_yes = ttk.Button(self, text="경비 확인", command=self.on_confirm)
+        button_yes.place(relx=0.24, rely=0.45)
 
         self.button_no = ttk.Button(self, text="다음", command=self.on_next)
-        self.button_no.place(relx=0.05, rely=0.86)
+        self.button_no.place(relx=0.05, rely=0.88)
         
         self.labels = []
         self.entries = []
@@ -40,26 +43,31 @@ class Page3View(ttk.Frame):
             combined_labels = lbs1
         
         title = ttk.Label(self, text="5. 경비 확인")
-        title.place(relx=0.05, rely=0.5)
+        title.place(relx=0.05, rely=0.52)
         self.labels.append(title)
         total_cost = 0
         for idx in range(len(combined_labels)):
             label_text = combined_labels[idx]
             label = ttk.Label(self, text=label_text)
-            label.place(relx = 0.05, rely = 0.55 + idx * 0.03)
+            label.place(relx = 0.05, rely = 0.57 + idx * 0.03)
             self.labels.append(label)
             # 예시 값, 실제 숫자 값에 맞게 수정해야 함
             # lbs1 혹은 lbs1 + lbs2의 순서대로 가격 입력 후 idx로 접근
             number_value = 50  
             label_number = ttk.Label(self, text=number_value)
-            label_number.place(relx=0.55, rely=0.55 + idx * 0.03)
+            label_number.place(relx=0.50, rely=0.55 + idx * 0.03)
             self.labels.append(label_number)
             total_cost += number_value
             
-        label_total_cost = ttk.Label(self, text=f"총 합계: {total_cost}")
+        label_total_cost = ttk.Label(self, text=f"총 합계")
         label_total_cost.place(relx=0.05, rely=0.81)
         self.labels.append(label_total_cost)
-
+        label_total_cost_value = ttk.Label(self, text=f"{total_cost}")
+        label_total_cost_value.place(relx=0.5, rely=0.81)
+        self.labels.append(label_total_cost_value)
+    
+    def on_cnt_confirm(self):
+        print(1)
 
     def on_next(self):
         self.controller.show_frame("Page4View")
@@ -87,8 +95,9 @@ class Page3View(ttk.Frame):
 
             # 수량
             entry = ttk.Entry(self)
-            entry.place(relx=0.3, rely=0.15 + idx * 0.035, width=50, height=20)
+            entry.place(relx=0.35, rely=0.15 + idx * 0.035, width=50, height=20)
             self.entries.append(entry)
+            entry.insert(0, "1")
             
             # 노무임.hwp * 품샘.pdf 넣어줘야 함!
             단가 = 100
@@ -96,21 +105,21 @@ class Page3View(ttk.Frame):
             label2.place(relx=0.55, rely=0.15 + idx * 0.035)
             self.labels.append(label2)
 
-            # 수량 * 단가 넣어줘야 함! 
-            금액 = 200
-            label3 = ttk.Label(self, text = 금액)
+            # 금액 = 수량 * 단가 넣어줘야 함! 
+            cost_value = 200
+            label3 = ttk.Label(self, text = cost_value)
             label3.place(relx=0.80, rely=0.15 + idx * 0.035)
             self.labels.append(label3)
             
             # 노무임 합계 계산
-            total_cost += 금액
+            total_cost += cost_value
             
             # 노무임 합계 라벨 생성 및 표시
             label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
-            label_total_cost.place(relx=0.05, rely=0.12 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.13 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
             #  간접 노무비 * 0.13
             label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
-            label_total_cost.place(relx=0.05, rely=0.15 + len(selected_texts) * 0.05)
+            label_total_cost.place(relx=0.05, rely=0.16 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)

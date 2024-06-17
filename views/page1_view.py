@@ -17,7 +17,7 @@ class Page1View(ttk.Frame):
         self.button2 = ttk.Button(self, text="예", command=lambda: controller.show_frame("Page2View"))
         self.button2.place(relx=0.05, rely=0.3)
         self.button1 = ttk.Button(self, text="아니오 (이전으로)", command=lambda: controller.show_frame("HomeView"))
-        self.button1.place(relx=0.25, rely=0.3)
+        self.button1.place(relx=0.24, rely=0.3)
 
         
         # self.button.pack()

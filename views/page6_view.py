@@ -14,7 +14,7 @@ class Page6View(ttk.Frame):
         self.button_yes.place(relx=0.05, rely=0.3)
 
         self.button_no = ttk.Button(self, text="아니오 (처음으로)", command=lambda: controller.show_frame("HomeView"))
-        self.button_no.place(relx=0.25, rely=0.3)
+        self.button_no.place(relx=0.24, rely=0.3)
 
     def update_data(self, decision):
         self.ynCommnet = decision
@@ -22,6 +22,6 @@ class Page6View(ttk.Frame):
     def on_yes(self):
         # 코멘트 여부 확인
         print('엑셀 다운로드 함수 실행!')
-        print('코멘트 남기기여부 : ' + self.ynCommnet)
+        print('코멘트 : ' + self.ynCommnet)
         
   
