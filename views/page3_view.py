@@ -87,7 +87,7 @@ class Page3View(ttk.Frame):
         print('확인, 밑의 영역 채우기')
         
         lbs1 = ['기타경비', '일반관리비', '산재보험료', '고용보험료', '이윤']
-        lbs2 = ['건강보험', '노인장기요양', '연금보험']
+        lbs2 = ['건강보험료', '노인장기요양보험료', '연금보험료']
         
         if self.ynConstructDate == '예':
             combined_labels = lbs1 + lbs2
@@ -98,15 +98,13 @@ class Page3View(ttk.Frame):
         title.place(relx=0.05, rely=0.52)
         self.labels.append(title)
         total_cost = 0
+        경비_list = [self.raw_data[key] for key in combined_labels]
         for idx in range(len(combined_labels)):
-            
             label_text = combined_labels[idx]
             label = ttk.Label(self, text=label_text)
             label.place(relx = 0.05, rely = 0.57 + idx * 0.03)
             self.labels.append(label)
-            # 예시 값, 실제 숫자 값에 맞게 수정해야 함
-            # lbs1 혹은 lbs1 + lbs2의 순서대로 가격 입력 후 idx로 접근
-            number_value = 50  
+            number_value = 경비_list[idx]  
             label_number = ttk.Label(self, text=number_value)
             label_number.place(relx=0.50, rely=0.57 + idx * 0.03)
             self.labels.append(label_number)
