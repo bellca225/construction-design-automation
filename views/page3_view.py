@@ -13,6 +13,7 @@ class Page3View(ttk.Frame):
         relx = 0.05
         lbs = ['작업', '수량', '단가', '금액']
         for lb in lbs :
+            print(lb)
             lb = ttk.Label(self, text = lb)
             lb.place(relx = relx, rely = 0.1)
             relx += 0.25
@@ -55,7 +56,7 @@ class Page3View(ttk.Frame):
             # lbs1 혹은 lbs1 + lbs2의 순서대로 가격 입력 후 idx로 접근
             number_value = 50  
             label_number = ttk.Label(self, text=number_value)
-            label_number.place(relx=0.50, rely=0.55 + idx * 0.03)
+            label_number.place(relx=0.50, rely=0.57 + idx * 0.03)
             self.labels.append(label_number)
             total_cost += number_value
             
@@ -95,7 +96,7 @@ class Page3View(ttk.Frame):
 
             # 수량
             entry = ttk.Entry(self)
-            entry.place(relx=0.35, rely=0.15 + idx * 0.035, width=50, height=20)
+            entry.place(relx=0.3, rely=0.15 + idx * 0.035, width=50, height=20)
             self.entries.append(entry)
             entry.insert(0, "1")
             

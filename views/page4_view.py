@@ -2,12 +2,14 @@ import tkinter as tk
 from tkinter import ttk
 
 class Page4View(ttk.Frame):
-    def __init__(self, parent, controller, total_cost_value):
+    def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
 
+
         lb1 = ttk.Label(self, text="6. 공사금액이 맞습니까?")
         lb1.place(relx=0.05, rely=0.05)
+        
         lb1 = ttk.Label(self, text="공사금액 표시")
         lb1.place(relx=0.05, rely=0.1)
 
