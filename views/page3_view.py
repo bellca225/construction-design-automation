@@ -122,14 +122,11 @@ class Page3View(ttk.Frame):
         노무임1_list = [self.노무임[key] for key in self.var_selected_texts]
         노무임2_list = [self.raw_data[key] for key in 노무임1_list]
 
-        # 기존에 생성된 위젯이 있다면 모두 제거
+        # 기존에 생성된 위젯이 entry 제외하고 모두 제거
         for label in self.labels:
             label.destroy()
-        # for entry in self.entries:
-        #     entry.destroy()
 
         self.labels.clear()
-        # self.entries.clear()
         
         total_cost = 0  # 노무임 합계를 저장할 변수
         user_count = []

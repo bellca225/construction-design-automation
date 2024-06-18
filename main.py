@@ -8,7 +8,6 @@ from views.page3_view import Page3View
 from views.page4_view import Page4View
 from views.page5_view import Page5View
 from views.page6_view import Page6View
-# from dataexporter import getData
 from ttkthemes import ThemedTk
 class MainApp(ThemedTk):
     def __init__(self, *args, **kwargs):
@@ -16,8 +15,6 @@ class MainApp(ThemedTk):
         self.set_theme("arc") 
         self.geometry('600x600+100+50')
         self.title('자동 통신공사 설계 프로그램')
-        # self.data = getData()
-        # print(self.data['twisted_cable']['4p'])
         self.selected_texts = []  # 선택된 텍스트를 저장할 리스트
         self.decision1 = None  # 공사 일수 결정을 저장할 변수
         self.decision2 = None  # 코멘트 작성 여부를 저장할 변수 (시트 하나 추가)

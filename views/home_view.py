@@ -30,6 +30,7 @@ class HomeView(ttk.Frame):
     def reset_selection(self):
         for var in self.var_list:
             var.set(0)  # 각 체크버튼 변수를 0으로 설정하여 체크 해제
+    
     def on_complete(self):
         selected_indices = [i for i, var in enumerate(self.var_list) if var.get() == 1]
         if not selected_indices:
