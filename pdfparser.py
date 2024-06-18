@@ -1,7 +1,8 @@
 import tabula
 from tabula import read_pdf
 import json
- 
+from loguru import logger
+
 #reads table from pdf file
 data = {
     'twisted_cable' : {
@@ -22,14 +23,13 @@ data = {
     'Communication_premises_power_cable' : {
         '25mm' : 0
     },
-    
+    'fr_cable' : 0,
 }
 def getData ():
+    logger.info('Parsing pdf file..')
     df = read_pdf("./datas/standard_production.pdf",pages="all", stream=True) #address of pdf file
     for i in range(len(df)):
         dict = df[i].to_dict();
-        # print("\n");
-        # print(dict)
         # twisted_cable
         dumpp = json.dumps(dict)
         if '통 신' in dict:
@@ -58,9 +58,10 @@ def getData ():
         elif '규격' in dict and 'P.V.C' in dumpp:
             _human = list(dict.values())[1]
             data['Communication_premises_power_cable']['25mm'] = float(_human[3])
+        elif 'FR 케이블' in dumpp : 
+            data['fr_cable'] = float(dict['통신케이블공'][0])
     # print(data)
+    logger.info('Parsing pdf file done!')
     return data
 
 # tabula.convert_into("abc.pdf", "output.csv", output_format="csv", pages='all')
-
-# print(getData("abc.pdf"))

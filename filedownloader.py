@@ -1,5 +1,6 @@
 import requests
 import ssl
+from loguru import logger
 
 class TLSAdapter(requests.adapters.HTTPAdapter):
     def init_poolmanager(self, *args, **kwargs):
@@ -16,11 +17,13 @@ urls = [
 ]
 def downloadFiles():
     for d in urls:
+        logger.info(f'Downloading {d["name"]} ..')
         headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36'}
 
         with requests.session() as s:
             s.mount("https://", TLSAdapter())
-            response = s.get(f'{origin}/{d['url']}', headers=headers)
+            response = s.get(f"{origin}/{d['url']}", headers=headers)
         # response = requests.get(, verify=certifi.where())
-        with open(f'./datas/{d['name']}', 'wb') as file:
+        with open(f"./datas/{d['name']}", 'wb') as file:
             file.write(response.content)
+        logger.info(f'{d["name"]} downloaded!')

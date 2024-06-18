@@ -1,7 +1,8 @@
 import pandas as pd
 import json
-
+from loguru import logger
 def getData():
+    logger.info('Parsing excel file..')
     # 파일명
     file_name = './datas/costs.xlsx'
 
@@ -19,7 +20,9 @@ def getData():
         '건강보험료' : 0,
         '노인장기요양보험료' : 0,
         '연금보험료' : 0,
+        '산재보험료' : 0,
     }
+
     for d in dict.values():
         vList = list(d.values())
 
@@ -42,6 +45,10 @@ def getData():
                         final['건강보험료'] = float(d[96].split('x')[1])
                     elif vList.count('[연금보험료]') > 0:
                         final['연금보험료'] = float(d[96].split('x')[1])    
+                elif dd.find('(노) x') != -1 and vList.count('[산재보험료]') > 0 :
+                    final['산재보험료'] = float(d[54].split('x')[1])    
                 elif dd.find('(건강보험료) x') != -1 and vList.count('[노인장기요양보험료]') > 0:
                     final['노인장기요양보험료'] = float(d[96].split('x')[1])
+    logger.info('Parsing excel file done!')
     return final;
+    

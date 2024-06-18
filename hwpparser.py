@@ -1,6 +1,7 @@
 import olefile
 import os
 import pandas as pd
+from loguru import logger
 
 def read_hwp(path): # path = "파일위치/파일.hwp"
     f = olefile.OleFileIO(path)
@@ -18,6 +19,7 @@ def text2table(text):
     return table
 
 def getData():
+    logger.info('Parsing hwp file..')
     data = text2table(read_hwp("./datas/wages.hwp"))
 
     published_wage = {}
@@ -29,5 +31,5 @@ def getData():
         elif "공표임금" in d:
             isFind = True
 
-    print(published_wage)
+    logger.info('Parsing hwp file done!')
     return published_wage

@@ -9,7 +9,7 @@ def getData():
     data.update(excelData())
     data.update(pdfData())
     data.update(hwpData())
-    print(data)
+    # print(data)
     return data
 
-getData()
+# getData()
