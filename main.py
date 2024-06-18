@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk
 import tkinter.font
 from views.home_view import HomeView
@@ -49,9 +48,13 @@ class MainApp(ThemedTk):
             frame.update_data(self.selected_texts, self.decision1)
         elif page_name == "Page6View":
             frame.update_data(self.decision2)
+        elif page_name == "Page4View" and hasattr(self.frames["Page3View"], "var_total_cost_value"):
+            total_cost_value = self.frames["Page3View"].var_total_cost_value
+            frame.update_data(total_cost_value)
         elif hasattr(frame, 'update_data'):
             frame.update_data(*args)
         frame.tkraise()
+        
 
     def set_selected_texts(self, selected_texts):
         self.selected_texts = selected_texts

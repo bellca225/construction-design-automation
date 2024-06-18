@@ -1,4 +1,3 @@
-import tkinter as tk
 from tkinter import ttk
 
 class Page3View(ttk.Frame):
@@ -54,6 +53,7 @@ class Page3View(ttk.Frame):
         }
     
     var_selected_texts = []
+    var_total_cost_value = 0
     
     ynConstructDate = ''
     def __init__(self, parent, controller):
@@ -113,8 +113,9 @@ class Page3View(ttk.Frame):
         label_total_cost = ttk.Label(self, text=f"총 합계")
         label_total_cost.place(relx=0.05, rely=0.81)
         self.labels.append(label_total_cost)
-        label_total_cost_value = ttk.Label(self, text=f"{total_cost}")
+        label_total_cost_value = ttk.Label(self, text=f"{round(total_cost, 6)}")
         label_total_cost_value.place(relx=0.5, rely=0.81)
+        self.var_total_cost_value = round(total_cost,6)
         self.labels.append(label_total_cost_value)
     
     def on_cnt_confirm(self):
@@ -122,7 +123,7 @@ class Page3View(ttk.Frame):
         노무임1_list = [self.노무임[key] for key in self.var_selected_texts]
         노무임2_list = [self.raw_data[key] for key in 노무임1_list]
 
-        # 기존에 생성된 위젯이 entry 제외하고 모두 제거
+        # 기존에 생성된 위젯이 entry 제외하고 있다면 모두 제거
         for label in self.labels:
             label.destroy()
 
@@ -163,12 +164,12 @@ class Page3View(ttk.Frame):
             total_cost += cost_value
             
             # 노무임 합계 라벨 생성 및 표시
-            label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
+            label_total_cost = ttk.Label(self, text=f"노무비 합계: {round(total_cost, 6)}")
             label_total_cost.place(relx=0.05, rely=0.125 + len(self.var_selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
             #  간접 노무비 * 0.13
-            label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
+            label_total_cost = ttk.Label(self, text=f"간접 노무비: {round(total_cost * 0.13, 6)}")
             label_total_cost.place(relx=0.05, rely=0.155 + len(self.var_selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
@@ -176,7 +177,8 @@ class Page3View(ttk.Frame):
         
 
     def on_next(self):
-        self.controller.show_frame("Page4View")
+        print(self.var_total_cost_value)
+        self.controller.show_frame("Page4View", self.var_total_cost_value )
 
     def update_data(self, selected_texts, decision = None):
         self.var_selected_texts = selected_texts
@@ -226,11 +228,11 @@ class Page3View(ttk.Frame):
             total_cost += cost_value
             
             # 노무임 합계 라벨 생성 및 표시
-            label_total_cost = ttk.Label(self, text=f"노무비 합계: {total_cost}")
+            label_total_cost = ttk.Label(self, text=f"노무비 합계: {round(total_cost, 6)}")
             label_total_cost.place(relx=0.05, rely=0.125 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
             #  간접 노무비 * 0.13
-            label_total_cost = ttk.Label(self, text=f"간접 노무비: {total_cost * 0.13}")
+            label_total_cost = ttk.Label(self, text=f"간접 노무비: {round(total_cost * 0.13, 6)}")
             label_total_cost.place(relx=0.05, rely=0.155 + len(selected_texts) * 0.05)
             self.labels.append(label_total_cost)
