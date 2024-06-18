@@ -59,6 +59,8 @@ class Page3View(ttk.Frame):
     def __init__(self, parent, controller):
         ttk.Frame.__init__(self, parent)
         self.controller = controller
+        
+        self.var_total_cost_value = 0
 
         lb1 = ttk.Label(self, text="4. 노무임 확인")
         lb1.place(relx=0.05, rely=0.05)
@@ -70,21 +72,26 @@ class Page3View(ttk.Frame):
             lb.place(relx = relx, rely = 0.1)
             relx += 0.25
 
-        button_yes = ttk.Button(self, text="수량 적용", command=self.on_cnt_confirm)
+        button_yes = ttk.Button(self, text="1. 수량 적용", command=self.on_cnt_confirm)
         button_yes.place(relx=0.05, rely=0.45)
     
-        button_yes = ttk.Button(self, text="경비 확인", command=self.on_confirm)
+        button_yes = ttk.Button(self, text="2. 경비 확인", command=self.on_confirm)
         button_yes.place(relx=0.24, rely=0.45)
 
-        self.button_no = ttk.Button(self, text="다음", command=self.on_next)
+        self.button_no = ttk.Button(self, text="3. 다음", command=self.on_next)
+        self.button_no.place(relx=0.285, rely=0.88)
+        
+        self.button_no = ttk.Button(self, text="이전(공사일 수정)", command=self.on_before)
         self.button_no.place(relx=0.05, rely=0.88)
         
         self.labels = []
         self.entries = []
+        
+    def on_before(self):        
+        self.controller.show_frame("Page2View")
 
     def on_confirm(self):
         print('공사 30일 이상 여부 : ' + self.ynConstructDate)
-        print('확인, 밑의 영역 채우기')
         
         lbs1 = ['기타경비', '일반관리비', '산재보험료', '고용보험료', '이윤']
         lbs2 = ['건강보험료', '노인장기요양보험료', '연금보험료']
@@ -94,7 +101,7 @@ class Page3View(ttk.Frame):
         else:
             combined_labels = lbs1
         
-        title = ttk.Label(self, text="5. 경비 확인")
+        title = ttk.Label(self, text="5. 경비 확인 (공사 기간에 따라 다르게 산정됨)")
         title.place(relx=0.05, rely=0.52)
         self.labels.append(title)
         total_cost = 0
@@ -115,7 +122,7 @@ class Page3View(ttk.Frame):
         self.labels.append(label_total_cost)
         label_total_cost_value = ttk.Label(self, text=f"{round(total_cost, 6)}")
         label_total_cost_value.place(relx=0.5, rely=0.81)
-        self.var_total_cost_value = round(total_cost,6)
+        self.var_total_cost_value = round(total_cost, 6)
         self.labels.append(label_total_cost_value)
     
     def on_cnt_confirm(self):
@@ -133,7 +140,6 @@ class Page3View(ttk.Frame):
         user_count = []
         # 동적으로 라벨 3개와 인풋 1개를 배열의 각 원소마다 생성
         for entry in self.entries:
-                print(entry.get())
                 user_count.append(entry.get())
                 
         for idx, text in enumerate(self.var_selected_texts):
@@ -142,13 +148,6 @@ class Page3View(ttk.Frame):
             label1.place(relx=0.05, rely=0.15 + idx * 0.03)
             self.labels.append(label1)
 
-            # 수량
-            # entry = ttk.Entry(self)
-            # entry.place(relx=0.3, rely=0.15 + idx * 0.035, width=50, height=20)
-            # self.entries.append(entry)
-            # entry.insert(0, "1")
-            
-        
             단가 = 품셈_list[idx] * 노무임2_list[idx]
             label2 = ttk.Label(self, text = 단가)
             label2.place(relx=0.55, rely=0.15 + idx * 0.035)
@@ -172,13 +171,10 @@ class Page3View(ttk.Frame):
             label_total_cost = ttk.Label(self, text=f"간접 노무비: {round(total_cost * 0.13, 6)}")
             label_total_cost.place(relx=0.05, rely=0.155 + len(self.var_selected_texts) * 0.05)
             self.labels.append(label_total_cost)
-            
-        print(self.var_selected_texts)
-        
 
     def on_next(self):
-        print(self.var_total_cost_value)
         self.controller.show_frame("Page4View", self.var_total_cost_value )
+        self.var_total_cost_value = 0
 
     def update_data(self, selected_texts, decision = None):
         self.var_selected_texts = selected_texts

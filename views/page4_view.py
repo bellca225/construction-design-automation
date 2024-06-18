@@ -15,7 +15,7 @@ class Page4View(ttk.Frame):
         
         self.button_yes.place(relx=0.05, rely=0.3)
 
-        self.button_no = ttk.Button(self, text="아니오", command=self.on_no)
+        self.button_no = ttk.Button(self, text="아니오(이전)", command=self.on_no)
         self.button_no.place(relx=0.24, rely=0.3)
 
     def on_yes(self):
