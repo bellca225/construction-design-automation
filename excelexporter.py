@@ -1,13 +1,16 @@
 import openpyxl
 from loguru import logger
 file_path = "./excel_result";
+
+# juho : 금액을 천 단위로 내림하는 함수
 def round_down(amount):
     rounded = (amount // 1000) * 1000
     remainder = amount % 1000
     return rounded, remainder
+# juho : 엑셀 파일을 생성하는 함수
 def exportExcel(excel_data, comment):
     logger.info('Exporting to excel file..')
-    #region 엑셀 데이터 계산
+    #region juho : 엑셀 데이터 계산
     excel_data['공구손료'] = round(excel_data['직접노무비'] * 0.03)
     excel_data['산재보험료'] = round(excel_data['노무비'] * excel_data['산재보험료계수'])
     excel_data['고용보험료'] = round(excel_data['노무비'] * excel_data['고용보험료계수'])
@@ -41,7 +44,7 @@ def exportExcel(excel_data, comment):
     # 엑셀 파일 생성
     wb = openpyxl.Workbook()
 
-    #region 시트 기본 항목 : 제목 등 설정
+    #region juho : 시트 기본 항목, 제목 등 설정
     wb.active.title = "간이공사산출명세서";
     #a2 - w2 merge
     ws = wb.active
@@ -56,7 +59,7 @@ def exportExcel(excel_data, comment):
     ws['A3'].font = openpyxl.styles.Font(size=16, bold=True)
     ws['A3'] = 'o 공사명 : 보호계전기 데이터 취득시스템(PDAS) 포인트 증설공사'
     #endregion
-    #시트 기본 항목 : 표 설정
+    # juho : 산출명세서가 이루어지는 기본적인 항목들은 미리 스타일과, 셀위치를 정의해둠
     defaultData = [
         {'data' : '구      분', 's' : 'a4', 'e' : 'c4', 'fontsize' : 11, 'fontcolor' : '000000', 'fontstyle' : 'bold', 'borderline' : True, 'textalign' : 'center', 'background' : 'FFFFC0'},
         {'data' : '재료비', 's' : 'd4', 'e' : 'e4', 'fontsize' : 11, 'fontcolor' : '000000', 'fontstyle' : 'bold', 'borderline' : True, 'textalign' : 'center', 'background' : 'FFFFC0'},
@@ -223,7 +226,7 @@ def exportExcel(excel_data, comment):
         {'data' : final['도급부가세'], 's' : 'k56', 'e' : 'n56', 'fontsize' : 14, 'fontcolor' : '000000', 'fontstyle' : 'bold', 'borderline' : True, 'textalign' : 'center', 'background' : 'FFFF00'},
     ]
 
-    #재료
+    # juho : 재료비 항목들 반복
     재료_s = 14
     for i in range(0, len(excel_data['재료'])):
         defaultData.append({'data' : ' '+excel_data['재료'][i]['품명'], 's' : 'c' + str(재료_s + i), 'e' : 'd' + str(재료_s + i), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'left', 'background' : 'FFFFFF'})
@@ -233,6 +236,7 @@ def exportExcel(excel_data, comment):
         defaultData.append({'data' : excel_data['재료'][i]['단가'], 's' : 'k' + str(재료_s + i), 'e' : 'l' + str(재료_s + i), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'right', 'background' : 'FFFFFF'})
         defaultData.append({'data' : round(excel_data['재료'][i]['수량'] * excel_data['재료'][i]['단가']), 's' : 'm' + str(재료_s + i), 'e' : 'n' + str(재료_s + i), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'right', 'background' : 'FFFFFF'})
         defaultData.append({'data' : '견적', 's' : 'o' + str(재료_s + i), 'e' : 'o' + str(재료_s + i), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'right', 'background' : 'FFFFFF'})
+    # juho : 노무비 항목들 반복
     노무_s = 22
     for i in range(0, len(excel_data['노무'])):
         defaultData.append({'data' : ' '+excel_data['노무'][i]['품명'], 's' : 'c' + str(i+노무_s), 'e' : 'd' + str(i+노무_s), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'left', 'background' : 'FFFFFF'})
@@ -243,6 +247,7 @@ def exportExcel(excel_data, comment):
         defaultData.append({'data' : round(excel_data['노무'][i]['수량'] * excel_data['노무'][i]['단가']), 's' : 'm' + str(i+노무_s), 'e' : 'n' + str(i+노무_s), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'right', 'background' : 'FFFFFF'})
         defaultData.append({'data' : '품'+str(i), 's' : 'o' + str(i+노무_s), 'e' : 'o' + str(i+노무_s), 'fontsize' : 12, 'fontcolor' : '000000', 'fontstyle' : '', 'borderline' : True, 'textalign' : 'right', 'background' : 'FFFFFF'})
     
+    # juho : 결합된 데이터를 반복문으로, 셀하나씩 엑셀에 적용
     for d in defaultData:
         ws.merge_cells(d['s'] + ':' + d['e'])
         ws[d['s']].font = openpyxl.styles.Font(size=d['fontsize'], bold=d['fontstyle'] == 'bold', color= d['fontcolor'])

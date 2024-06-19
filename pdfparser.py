@@ -4,6 +4,7 @@ import json
 from loguru import logger
 
 #reads table from pdf file
+# juho : 품셈.pdf 파일에서 사용할 것들을 미리 정의
 data = {
     'twisted_cable' : {
         '4p' : 0
@@ -30,8 +31,9 @@ def getData ():
     df = read_pdf("./datas/standard_production.pdf",pages="all", stream=True) #address of pdf file
     for i in range(len(df)):
         dict = df[i].to_dict();
-        # twisted_cable
+        # juho : dict를 json으로 변환하여 특정 문자열이 있는지 확인하는 용도로 사용
         dumpp = json.dumps(dict)
+        #twisted_cable
         if '통 신' in dict:
             isFind = False
             for d in list(dict.values()) :

@@ -1,15 +1,16 @@
 import pandas as pd
 import json
 from loguru import logger
+# juho : 엑셀 파일을 읽어서 필요한 값들을 가져오는 함수
 def getData():
     logger.info('Parsing excel file..')
     # 파일명
     file_name = './datas/costs.xlsx'
 
-    # Daraframe형식으로 엑셀 파일 읽기
+    # juho : Daraframe형식으로 엑셀 파일 읽기
     data = pd.read_excel(file_name, sheet_name='건축제비율', header=None, engine='openpyxl')
 
-    # 데이터 프레임 출력
+    # juho : 데이터 프레임 출력
     dict = data.to_dict()
     final = {
         '간접노무비' : 0,
