@@ -40,8 +40,6 @@ def getData ():
                 for dd in list(d.values()) :
                     if type(dd) is str and dd.find('UTP') != -1:
                         isFind = True
-            # print(str(isFind))
-            # print(dict['통 신'])
             if isFind:
                 data['twisted_cable']['4p'] = float(dict['통 신'][2]);
         # connector_jack
@@ -65,5 +63,4 @@ def getData ():
     # print(data)
     logger.info('Parsing pdf file done!')
     return data
-
 # tabula.convert_into("abc.pdf", "output.csv", output_format="csv", pages='all')

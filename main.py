@@ -75,7 +75,6 @@ class MainApp(ThemedTk):
             frame = F(parent=self.container, controller=self)
             self.frames[page_name] = frame
             frame.grid(row=0, column=0, sticky="nsew")
-        
         self.show_frame("HomeView")
         
     def show_frame(self, page_name, *args):
