@@ -1,5 +1,6 @@
 certifi==2024.6.2
 charset-normalizer==3.3.2
+colorama==0.4.6
 distro==1.9.0
 et-xmlfile==1.1.0
 idna==3.7
@@ -7,6 +8,7 @@ loguru==0.7.2
 numpy==1.26.4
 olefile==0.47
 openpyxl==3.1.4
+packaging==24.1
 pandas==2.2.2
 pillow==10.3.0
 python-dateutil==2.9.0.post0
@@ -19,4 +21,5 @@ tk==0.1.0
 ttkthemes==3.2.2
 tzdata==2024.1
 urllib3==2.2.2
+win32-setctime==1.1.0
 xlrd==2.0.1
