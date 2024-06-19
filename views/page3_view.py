@@ -2,12 +2,6 @@ from tkinter import ttk
 
 class Page3View(ttk.Frame):
     # 주호 변경 예정
-    # data['twisted_cable']['4p']
-    # data['connector_jack']['RS-232C(10Pin)']
-    # data['control_cable']['2C']['2.5mm']
-    # data['Communication_premises_power_cable']['25mm']
-    # 마지막 FR 케이블은 현영이한테 확인받을 거임
-    
     품셈 = {
         '꼬임 케이블 포설' : 1, 
         '커넥터 및 Jack 접속' : 2, 
