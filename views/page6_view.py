@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
+from excelexporter import exportExcel
+from loguru import logger
 
 class Page6View(ttk.Frame):
     ynCommnet = ''
@@ -21,7 +23,8 @@ class Page6View(ttk.Frame):
         
     def on_yes(self):
         # 코멘트 여부 확인
-        print('엑셀 다운로드 함수 실행!')
-        print('코멘트 : ' + self.ynCommnet)
+        logger.info('코멘트 여부 : ' + self.ynCommnet)
+        logger.info('Excel 파일 다운로드 시작..')
+        exportExcel(self.controller.excel_data, self.ynCommnet)
         
   

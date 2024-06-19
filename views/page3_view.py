@@ -8,50 +8,6 @@ class Page3View(ttk.Frame):
     # data['Communication_premises_power_cable']['25mm']
     # 마지막 FR 케이블은 현영이한테 확인받을 거임
     
-    품셈 = {
-        '꼬임 케이블 포설' : 1, 
-        '커넥터 및 Jack 접속' : 2, 
-        '제어 케이블' : 3,
-        '통신용 구내 전력케이블' : 4, 
-        'FR 케이블' : 5
-        }
-    노무임 = {
-        '꼬임 케이블 포설' : '통신케이블공', 
-        '커넥터 및 Jack 접속' : '통신내선공', 
-        '제어 케이블' : '통신케이블공',
-        '통신용 구내 전력케이블' : '통신케이블공', 
-        'FR 케이블' : '통신케이블공'
-        }
-    raw_data = {
-        '간접노무비': 12.2, 
-        '기타경비': 5.8, 
-        '일반관리비': 6.0, 
-        '이윤': 15.0, 
-        '고용보험료': 1.57, 
-        '건강보험료': 3.545, 
-        '노인장기요양보험료': 12.81, 
-        '연금보험료': 4.5, 
-        '산재보험료' : 3.7, 
-        'twisted_cable': {'4p': 0.15}, 
-        'connector_jack': {'RS-232C(10Pin)': 0.49, 
-        'Modular(RJ45-8PinPlug)': 0.13, 
-        'Modular(Outlet)': 0.28, 
-        'TELCO(50Pin)': 1.19, 
-        'Data Line': 0.84}, 
-        'control_cable': {'2C': {'2.5mm': 0.1, }}, #여기 } 안 닫혀서 추가함
-        '통신내선공': 267277, 
-        '통신설비공': 296882, 
-        '통신외선공': 387376, 
-        '통신케이블공': 414944, 
-        '무선안테나공': 339642, 
-        '광케이블설치사': 444142, 
-        'H/W시험사': 375020, 
-        'S/W시험사': 433747, 
-        '통신관련기사': 305806, 
-        '통신관련산업기사': 294019, 
-        '통신관련기능사': 242587
-        }
-    
     var_selected_texts = []
     var_total_cost_value = 0
     
@@ -86,6 +42,22 @@ class Page3View(ttk.Frame):
         
         self.labels = []
         self.entries = []
+        # data insert
+        self.품셈 = {
+            '꼬임 케이블 포설' : self.controller.raw_data['twisted_cable']['4p'], 
+            '커넥터 및 Jack 접속' : self.controller.raw_data['connector_jack']['RS-232C(10Pin)'], 
+            '제어 케이블' : self.controller.raw_data['control_cable']['2C']['2.5mm'],
+            '통신용 구내 전력케이블' : self.controller.raw_data['Communication_premises_power_cable']['25mm'], 
+            'FR 케이블' : self.controller.raw_data['fr_cable']
+        }
+        self.노무임 = {
+            '꼬임 케이블 포설' : '통신케이블공', 
+            '커넥터 및 Jack 접속' : '통신내선공', 
+            '제어 케이블' : '통신케이블공',
+            '통신용 구내 전력케이블' : '통신케이블공', 
+            'FR 케이블' : '통신케이블공'
+            }
+        self.raw_data = self.controller.raw_data
         
     def on_before(self):        
         self.controller.show_frame("Page2View")
@@ -116,6 +88,7 @@ class Page3View(ttk.Frame):
             label_number.place(relx=0.50, rely=0.57 + idx * 0.03)
             self.labels.append(label_number)
             total_cost += number_value
+            self.controller.excel_data[label_text + '계수'] = number_value
             
         label_total_cost = ttk.Label(self, text=f"총 합계")
         label_total_cost.place(relx=0.05, rely=0.81)
@@ -124,6 +97,7 @@ class Page3View(ttk.Frame):
         label_total_cost_value.place(relx=0.5, rely=0.81)
         self.var_total_cost_value = round(total_cost, 6)
         self.labels.append(label_total_cost_value)
+        self.controller.excel_data['경비'] = total_cost
     
     def on_cnt_confirm(self):
         품셈_list = [self.품셈[key] for key in self.var_selected_texts]
@@ -137,6 +111,10 @@ class Page3View(ttk.Frame):
         self.labels.clear()
         
         total_cost = 0  # 노무임 합계를 저장할 변수
+        self.controller.excel_data['재료비'] = 0
+        self.controller.excel_data['노무비'] = 0
+        self.controller.excel_data['직접노무비'] = 0
+        self.controller.excel_data['간접노무비'] = 0
         user_count = []
         # 동적으로 라벨 3개와 인풋 1개를 배열의 각 원소마다 생성
         for entry in self.entries:
@@ -149,28 +127,33 @@ class Page3View(ttk.Frame):
             self.labels.append(label1)
 
             단가 = 품셈_list[idx] * 노무임2_list[idx]
+            self.controller.excel_data['재료비'] += 단가
+            self.controller.excel_data['재료'].append({'품명': text, '수량': int(user_count[idx]), '단가': 단가})
+            self.controller.excel_data['노무'].append({'품명': text, '수량': int(user_count[idx]), '단가': 노무임2_list[idx]})
             label2 = ttk.Label(self, text = 단가)
             label2.place(relx=0.55, rely=0.15 + idx * 0.035)
             self.labels.append(label2)
 
             # 금액 = 수량 * 단가 넣어줘야 함! 
-            cost_value = 단가 * int(user_count[idx])
+            cost_value = int(노무임2_list[idx]) * int(user_count[idx])
             label3 = ttk.Label(self, text = cost_value)
             label3.place(relx=0.80, rely=0.15 + idx * 0.035)
             self.labels.append(label3)
             
             # 노무임 합계 계산
             total_cost += cost_value
-            
+            self.controller.excel_data['노무비'] += round(cost_value, 6)
             # 노무임 합계 라벨 생성 및 표시
             label_total_cost = ttk.Label(self, text=f"노무비 합계: {round(total_cost, 6)}")
             label_total_cost.place(relx=0.05, rely=0.125 + len(self.var_selected_texts) * 0.05)
             self.labels.append(label_total_cost)
             
             #  간접 노무비 * 0.13
+            self.controller.excel_data['간접노무비'] += round(total_cost * 0.13, 6)
             label_total_cost = ttk.Label(self, text=f"간접 노무비: {round(total_cost * 0.13, 6)}")
             label_total_cost.place(relx=0.05, rely=0.155 + len(self.var_selected_texts) * 0.05)
             self.labels.append(label_total_cost)
+        self.controller.excel_data['직접노무비'] = self.controller.excel_data['노무비'] - self.controller.excel_data['간접노무비']
 
     def on_next(self):
         self.controller.show_frame("Page4View", self.var_total_cost_value )
