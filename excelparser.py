@@ -51,5 +51,5 @@ def getData():
                 elif dd.find('(건강보험료) x') != -1 and vList.count('[노인장기요양보험료]') > 0:
                     final['노인장기요양보험료'] = float(d[96].split('x')[1])
     logger.info('Parsing excel file done!')
-    return final;
+    return final
     

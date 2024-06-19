@@ -1,6 +1,6 @@
 import openpyxl
 from loguru import logger
-file_path = "./excel_result";
+file_path = "./excel_result"
 
 # juho : 금액을 천 단위로 내림하는 함수
 def round_down(amount):
@@ -45,7 +45,7 @@ def exportExcel(excel_data, comment):
     wb = openpyxl.Workbook()
 
     #region juho : 시트 기본 항목, 제목 등 설정
-    wb.active.title = "간이공사산출명세서";
+    wb.active.title = "간이공사산출명세서"
     #a2 - w2 merge
     ws = wb.active
     ws.merge_cells('A2:W2')
