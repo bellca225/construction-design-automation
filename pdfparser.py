@@ -30,7 +30,7 @@ def getData ():
     logger.info('Parsing pdf file..')
     df = read_pdf("./datas/standard_production.pdf",pages="all", stream=True) #address of pdf file
     for i in range(len(df)):
-        dict = df[i].to_dict();
+        dict = df[i].to_dict()
         # juho : dict를 json으로 변환하여 특정 문자열이 있는지 확인하는 용도로 사용
         dumpp = json.dumps(dict)
         #twisted_cable
@@ -41,10 +41,10 @@ def getData ():
                     if type(dd) is str and dd.find('UTP') != -1:
                         isFind = True
             if isFind:
-                data['twisted_cable']['4p'] = float(dict['통 신'][2]);
+                data['twisted_cable']['4p'] = float(dict['통 신'][2])
         # connector_jack
         elif 'RS-232C(10Pin)' in dumpp:
-            t = dict['통신내선공'];
+            t = dict['통신내선공']
             data['connector_jack']['RS-232C(10Pin)'] = float(t[0])
             data['connector_jack']['Modular(RJ45-8PinPlug)'] = float(t[1])
             data['connector_jack']['Modular(Outlet)'] = float(t[2])
