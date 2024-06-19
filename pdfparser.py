@@ -26,9 +26,17 @@ data = {
     },
     'fr_cable' : 0,
 }
+encoding_list = ['cp949', 'utf-8','utf-16'] 
 def getData ():
     logger.info('Parsing pdf file..')
-    df = read_pdf("./datas/standard_production.pdf",pages="all", stream=True) #address of pdf file
+    for k in range(len(encoding_list)):
+        try:
+            df = read_pdf("./datas/standard_production.pdf",pages="all", stream=True, encoding=encoding_list[k]) #address of pdf file
+            break
+        except:
+            if k == len(encoding_list) - 1:
+                logger.error('Cannot read pdf file')
+                return None
     for i in range(len(df)):
         dict = df[i].to_dict();
         # juho : dict를 json으로 변환하여 특정 문자열이 있는지 확인하는 용도로 사용
